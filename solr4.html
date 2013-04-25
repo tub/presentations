@@ -1,0 +1,223 @@
+<html lang="en">
+	
+	<head>
+		<meta charset="utf-8" />
+		
+		<title>reveal.js - HTML5 Presentations</title>
+
+		<meta name="description" content="An easy to use CSS 3D slideshow tool for quickly creating good looking HTML presentations."/>
+		<meta name="author" content="Hakim El Hattab"/>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'/>
+		
+		<link rel="stylesheet" href="css/reset.css"/>
+		<link rel="stylesheet" href="css/main.css"/>
+		<link rel="stylesheet" href="css/print.css" type="text/css" media="print"/>
+
+		<link rel="stylesheet" href="lib/css/zenburn.css"/>
+	</head>
+	
+	<body>
+		
+		<div class="reveal">
+
+			<!-- Used to fade in a background when a specific slide state is reached -->
+			<div class="state-background"></div>
+			
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-state="first">
+          <img src="solr_logo_rgb.png" />
+          <h1>4!</h1>
+          <h3>Coming soon!</h3>
+				</section>
+
+
+        <section>
+        <h1>What's new?</h1>
+        <ul>
+            <li>Nice Admin UI</li>
+            <li>Hierachical Faceting</li>
+            <li>New Spellchecker</li>
+            <li>Solr Cloud</li>
+            <li>Joins</li>
+            <li>Regexes</li>
+            <li>Realtime updates</li>
+            <li>Updatable documents</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Nice Admin UI</h2>
+          <p><a href="http://cspsemscol01c:20101" target="solr">Smelly old one</a></p>
+          <p><a href="http://localhost:8081" target="solr">Shiny new one</a></p>
+        </section>
+
+       <section>
+          <h2>Hierachical Faceting<br/> aka Pivot Facets</h2>
+          <p>Tells you what the result-set will be if you selet the facet</p>
+          <blockquote>Another way to think of it is each field is treated as a vector containing the constraint counts for that field, and taking a "cross product" to produce an N-dimensional matrix showing the counts for each permutation. </blockquote>
+       </section>
+
+       <section>
+       <p>Add <code>facet.pivot = category_level0,category_level1,category_level2</code> to your query</p>
+         <pre>
+       <code style="font-size: 50%;">
+&lt;result numFound=”3” ...
+&lt;lst name=”facet_pivot”&gt;
+  &lt;arr name=”category_level0,category_level1,category_level2”&gt;
+    &lt;lst&gt;
+      &lt;str name=”field”&gt;category_level0&lt;/str&gt;
+      &lt;str name=”value”&gt;NonFic&lt;/str&gt;
+      &lt;int name=”count”&gt;3&lt;/int&gt;
+       &lt;arr name=”pivot”&gt;
+         &lt;lst&gt;
+             &lt;str name=”field”&gt;category_level1&lt;/str&gt;
+             &lt;str name=”value”&gt;Law&lt;/str&gt;
+             &lt;int name=”count”&gt;1&lt;/int&gt;
+         &lt;/lst&gt;
+         &lt;lst&gt;
+             &lt;str name=”field”&gt;category_level1&lt;/str&gt;
+             &lt;str name=”value”&gt;Sci&lt;/str&gt;
+             &lt;int name=”count”&gt;2&lt;/int&gt;
+             &lt;arr name=”pivot”&gt;
+               &lt;lst&gt;
+                  &lt;str name=”field”&gt;category_level2&lt;/str&gt;
+                  &lt;str name=”value”&gt;Phys&lt;/str&gt;
+                  &lt;int name=”count”&gt;1&lt;/int&gt;
+               &lt;/lst&gt;
+              &lt;/arr&gt;
+          &lt;/lst&gt;
+       &lt;/arr&gt;
+       </code>
+</pre>
+       </section> 
+
+       <section>
+       <h2>New <span class="wrong">Spellchequer</span></h2>
+        <ul>
+          <li>Doesn't require it's own index!</li>
+          <li>No need to rebuild spelling index</li>
+          <li>Minimal config changes</li>
+        </ul>
+       </section>
+
+       <section>
+        <h2>Solr Cloud</h2>
+        <ul>
+          <li>Distributed, fault-tolerant solr clustering</li>
+          <li>Uses Apache Zookeeper for config management</li>
+          <li>Manages Sharding and Replication</li>
+        </ul>
+       </section>
+
+       <section>
+       <h2>Solr Cloud</h2>
+       <p>Simple!</p>
+       <img src="2shard4serverFull.jpg" />
+       </section>
+
+       <section>
+        <h2>Join</h2>
+        <p>e.g. <br/><code><strong>fl</strong>=xxx,yyy<br/>&amp;<strong>q</strong>={!join from=inner_id to=outer_id}field:value</code></p>
+
+        <p>Comparable to an SQL IN subquery-query-query<p>
+        <pre><code>SELECT xxx, yyy 
+FROM collection1
+WHERE outher_id IN (SELECT inner_id FROM collection1 where zzz = "value")</code></pre>
+        <p>e.g. <a href="http://localhost:8081/select?q={!join%20from=s2_parent%20to=s2_id}mime_type:image">Articles with images in Journals</a></p>
+       </section>
+       <section>
+        <h2>Regexes in queries!</h2>
+        <p>Cut down regex model, e.g</p>
+        <pre><code><strong>field</strong>:/[alumin[i]?um]]/</code></pre>
+       </section>
+
+       <section>
+        <h2>Realtime updates</h2>
+        <p>You can ask solr to give you pre-committed data</p>
+       </section>
+       <section>
+        <h2>Updatable Documents</h2>
+        <p>You can add/subtract and replace individual fields in documents</p>
+        <p>Requires ALL fields to be "stored" type</p>
+       </section>
+       <section>
+        <h2>More info</h2>
+        <ul>
+          <li><a href="http://lucene.472066.n3.nabble.com/ANNOUNCE-Apache-Solr-4-0-beta-released-td4001117.html">Solr 4-beta announcement</a></li>
+          <li><a href="http://wiki.apache.org/solr/Solr4.0">Solr 4 wiki page</a></li>
+        </ul>
+       </section>
+      <section>
+        <img src="lightsaber-roomba-cats1.jpg" />
+        <h4>Bye!</h4>
+      </section>
+    </div>
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+			</aside>
+
+			<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+			<div class="progress"><span></span></div>
+			
+		</div>
+
+		<!-- Optional libraries for code syntax highlighting and classList support in IE9 -->
+		<script src="lib/js/head.min.js"></script>
+
+		<script>
+			// Load the main reveal.js script
+			head.js( 'js/reveal.js', function() {
+				// Parse the query string into a key/value object
+				var query = {};
+
+				location.search.replace( /[A-Z0-9]+?=(\w*)/gi, function(a) {
+					query[ a.split( '=' ).shift() ] = a.split( '=' ).pop();
+				} );
+
+				// Fires when a slide with data-state=customevent is activated
+				Reveal.addEventListener( 'customevent', function() {
+					console.log( '"customevent" has fired' );
+				} );
+
+				// Fires each time a new slide is activated
+				Reveal.addEventListener( 'slidechanged', function( event ) {
+					// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+				} );
+
+				// Full list of configuration options available here:
+				// https://github.com/hakimel/reveal.js#configuration
+				Reveal.initialize({
+					controls: true,
+					progress: true,
+					history: true,
+					
+					theme: query.theme || 'default', // default/neon/beige
+					transition: query.transition || 'default' // default/cube/page/concave/linear(2d)
+				});
+			} );
+			
+			// Load third party scripts
+			head.js( 'lib/js/classList.js' );
+			head.js( 'lib/js/highlight.js', function() {
+				// Fire off syntax highlighting for potential code samples in the slides
+				hljs.initHighlightingOnLoad();
+			} );
+
+			// If we're runnning the notes server we need to include some additional JS
+			// TODO Is there a better way to determine if we're running the notes server?
+			if( window.location.host === 'localhost:1947' ) {
+				head.js( 'socket.io/socket.io.js', 'plugin/speakernotes/client.js' );
+			}
+		</script>
+		
+	</body>
+</html>
